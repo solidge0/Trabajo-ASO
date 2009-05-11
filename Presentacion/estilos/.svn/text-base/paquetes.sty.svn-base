@@ -1,0 +1,12 @@
+% Paquetes incluidos:
+% ======== =========
+\usepackage{amsfonts}
+\usepackage[spanish]{babel}
+% Paquetes específicos de Beamer
+\usepackage{beamerthemeshadow}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{times}
+\usetikzlibrary{arrows,shapes,snakes}

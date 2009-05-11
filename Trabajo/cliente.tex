@@ -1,0 +1,405 @@
+
+
+\section{Introducción al cliente en un \textbf{SCV}}
+
+Todos los sistemas de control de versiones se basan en disponer de un  
+\textbf{repositorio}, que es el conjunto de información gestionada por
+el sistema. Este repositorio contiene el historial de versiones de
+todos los elementos gestionados. Con lo cual, lo primero que debe
+hacer el cliente es obtener su copia de trabajo del repositorio;
+dependiendo de que tipo de \textbf{Sistema de Control de Versiones}
+utilice se obtendrá la copia de trabajo de una forma u otra.\\
+
+A partir de este momento ya el cliente podrá realizar sus aportes al
+repositorio. Para ello, el cliente trabajara bajo su copia de trabajo
+y realizará las modificaciones oportunas. Sin embargo, esas
+modificaciones no se tendrán en cuenta en el repositorio hasta que no
+se envíen al él. \\
+
+Aunque los tipos de \textbf{SCV} son muy distintos entre ellos, desde
+el punto de vista del cliente no lo son tanto: el hecho de que el
+repositorio se organice de forma distribuida o centralizada no afecta
+al estilo de trabajo del cliente. \\
+
+\subsection{Términos básicos}
+\begin{description}
+\item [Repositorio] Es el lugar donde se almacenan los datos
+  actualizados e históricos en un servidor.
+\item [Módulo] Conjunto de directorios y/o archivos dentro del
+  repositorio que pertenecen a un proyecto común. 
+\item [Rotular (tag)] Darle a alguna versión de cada uno de los
+  ficheros del módulo en desarrollo en un momento preciso un nombre
+  común ("etiqueta" o "rótulo") para asegurarse de reencontrar ese
+  estado de desarrollo posteriormente bajo ese nombre. 
+\item [Versión] Una revisión es una versión determinada de un
+  archivo. 
+\item [Ramificar (branch)] Un módulo puede ser bifurcado en un momento
+  de tiempo de forma que, desde ese momento en adelante, dos copias de
+  esos ficheros puedan ser desarrolladas a diferentes velocidades o de
+  diferentes formas, de modo independiente. 
+\item [Desplegar (check-out)] Un despliegue crea una copia de trabajo
+  local desde el repositorio. Se puede especificar una revisión
+  concreta, y por defecto se suele obtener la última. 
+\item [Envío (commit)] Una copia de los cambios hechos a una copia
+  local es escrita o integrada sobre repositorio. 
+\item [Conflicto] Puede ocurrir en varias circunstancias:
+\begin{itemize}
+\item Los usuarios X e Y despliegan versiones del archivo A en que las
+  líneas n1 hasta n2 son comunes. 
+\item El usuario X envía cambios entre las líneas n1 y n2 al archivo A.
+\item El usuario Y no actualiza el archivo A tras el envío del usuario X.
+\item El usuario Y realiza cambios entre las líneas n1 y n2.
+\item El usuario Y intenta posteriormente enviar esos cambios al archivo A.
+\end{itemize}
+En estos casos el sistema es incapaz de fusionar los cambios y pide al
+usuario que sea él quien \textbf{resuelva} el conflicto. 
+\item [Resolver] El acto de la intervención del usuario para atender
+  un conflicto entre diferentes cambios al mismo documento. 
+\item [Cambio (diff)] Un cambio representa una modificación específica
+  a un documento bajo control de versiones. 
+\item [Lista de Cambios (changelist)] En muchos sistemas de control de
+  versiones con commits multi-cambio atómicos, una lista de cambios
+  identifica el conjunto de cambios hechos en un único commit. 
+\item [Exportación] Una exportación es similar a un check-out, salvo
+  porque crea un árbol de directorios limpio sin los metadatos de
+  control de versiones presentes en la copia de trabajo. 
+\item [Importación] Una importación es la acción de copia un árbol de
+  directorios local (que no es en ese momento una copia de trabajo) en
+  el repositorio por primera vez.
+\item [Fusión (merge)] Una integración o fusión une dos conjuntos de
+  cambios sobre un fichero o un conjunto de ficheros en una revisión
+  unificada de dicho fichero o ficheros. Puede suceder cuando: 
+\begin{itemize}
+\item Un usuario, trabajando en esos ficheros, actualiza su copia
+  local con los cambios realizados, y añadidos al repositorio, por
+  otros usuarios. Análogamente, este mismo proceso puede ocurrir en el
+  repositorio cuando un usuario intenta check-in sus cambios. 
+\item Después de que el código haya sido branched, y un problema
+  anterior al branching sea arreglado en una rama, y se necesite
+  incorporar dicho arreglo en la otra. 
+\item Después de que los ficheros hayan sido branched, desarrollados
+  de forma independiente por un tiempo, y que entonces se haya
+  requerido que fueran fundidos de nuevo en un único trunk unificado. 
+\end{itemize}
+\item [Integración inversa] El proceso de fundir ramas de diferentes
+  equipos en el trunk principal del sistema de versiones. 
+\item [Actualización (update)] Una actualización integra los cambios
+  que han sido hechos en el repositorio (por ejemplo por otras
+  personas) en la copia de trabajo local. 
+\item [Copia de trabajo] La copia de trabajo es la copia local de los
+  ficheros de un repositorio, en un momento del tiempo o revisión
+  específicos. Todo el trabajo realizado sobre los ficheros en un
+  repositorio se realiza inicialmente sobre una copia de trabajo, de
+  ahí su nombre. Conceptualmente, es un cajón de arena o sandbox. 
+\item [Congelar] congelar significa permitir los últimos cambios
+  (commits) para solucionar las fallas a resolver en una entrega
+  (release) y suspender cualquier otro cambio antes de una entrega,
+  con el fin de obtener una versión consistente. 
+\end{description}
+
+\section{Ciclo de trabajo con \textbf{SCV} centralizado: Subversion}
+
+Cuando un cliente quiere comenzar a desarrollar un proyecto utilizando
+Subversion primeramente debe instalar la herramienta de la siguiente
+forma: 
+\begin{lstlisting}[style=consola]
+sudo apt-get install subversion
+\end{lstlisting}
+
+Cuando ya tiene la herramienta lista para utilizar ejecutará el
+\textit{checkout} inicial:  
+\begin{lstlisting}[style=consola]
+svn checkout http://ruta/repositorio 
+\end{lstlisting}
+Por ejemplo: 
+\begin{lstlisting}[style=consola]
+svn checkout http://192.168.2.101/svn/RepositorioEjemplo 
+\end{lstlisting}
+
+A partir de este momento el cliente ya tiene en su poder una copia de
+trabajo del repositorio en el cual podrá ejercer sus modificaciones e
+incluirlas en el sistema de control de versiones. El ciclo de trabajo
+que se debe llevar es el siguiente: 
+
+\begin{itemize}
+\item Actualizar la copia de trabajo (por si otros compañeros han
+  realizado modificaciones):  
+\begin{lstlisting}[style=consola]
+svn update
+\end{lstlisting}
+
+\item Examinar los cambios a partir de comentarios en las
+  revisiones. Cada vez que se envían las modificaciones al servidor se
+  incluye un comentario sobre qué es lo que se ha modificado para esa
+  revisión. Estos comentarios son los \textit{logs}. Para ver los logs
+  se introduce en consola la siguiente línea de comandos: 
+\begin{lstlisting}[style=consola]
+svn log -r revmenor:revmayor 
+\end{lstlisting}
+
+De esta forma se mostrará en pantalla los comentarios de cada revisión
+para informarnos de las modificaciones que se han realizado en
+ellas. Esto es muy útil ejecutarlo antes de ponernos a modificar para
+informarnos de cómo va el proyecto. 
+
+\item Realizar los cambios pertinentes a los ficheros y directorios:
+  mover, copiar, borrar, crear... (por ahora serán cambios
+  locales). Hay que hacerlos con la asistencia de \textbf{svn}. De
+  esta forma se mantendrá el historial de cambios. Se utiliza de la
+  siguiente forma: 
+\begin{lstlisting}[style=consola]
+svn add [fichero|directorio]
+svn mkdir directorio
+svn delete [fichero|directorio]
+svn mv [fichero|directorio]Original [fichero|directorio]Cambiado
+svn cp [fichero|directorio]Original [fichero|directorio]Copiado
+\end{lstlisting}
+
+Veamos varios ejemplos de uso de estos comandos:
+\begin{lstlisting}[style=consola]
+svn add fichero1.c                         // creamos fichero1.c
+svn add fichero2.c                         // creamos fichero2.c
+svn mkdir dirficheritos                    // creamos dirficheritos
+svn cp fichero1.c ficheritos/fichero1.h    // copiamos el fichero
+svn mv fichero2.c ficheritos/fichero1.cpp  // movemos el fichero
+svn delete fichero1.c                      // borramos fichero1.c
+\end{lstlisting}
+
+\item Examinar los cambios realizados. Podemos comprobar el estado de
+  los ficheros de la copia de trabajo de la siguiente forma: 
+\begin{lstlisting}[style=consola]
+svn status
+\end{lstlisting}
+
+Este comando muestra todos los cambios realizados en la copia de
+trabajo desde que se realizó el último \textbf{svn update}. Puede
+funcionar sin red ya que sólo es necesario tener las carpetas ocultas
+\textit{.svn}. Los códigos más comunes que nos muestra son: 
+\begin{itemize}
+\item \textbf{A} fichero o directorio añadido.
+\item \textbf{D} fichero o directorio borrado.
+\item \textbf{U} fichero o directorio actualizado con cambios
+  remotos. 
+\item \textbf{M} fichero o directorio modificado localmente.
+\item \textbf{G} fichero o directorio acutalizado con cambios locales
+  y remotos reunidos automáticamente. 
+\item \textbf{C} los cambios locales y remotos han de ser reunidos
+  localmente (conflicto en modificaciones). 
+\item \textbf{?} fichero o directorio que no se haya bajo el sistema
+  de control de versiones y no se está ignorando. 
+\item \textbf{!} fichero o directorio falta en el sistema de control
+  de versiones (puede haberse borrado localmente). 
+\item \textbf{~} el fichero o directorio no es del tipo esperado (se
+  obtiene un directorio y se esperaba un fichero o viseversa) .
+\item \textbf{+} se copiará información de historial además de
+  contenido. 
+\end{itemize}
+
+\item Examinar las diferencias de ficheros entre dos revisiones. Ésto
+  es útil cuando queremos enviar modificaciones cuando no tenemos
+  acceso de escritura o para ver que han modificado los
+  compañeros. Por defecto compara la revisión modificada localmente
+  con la última registrada en el servidor. El comando a utilizar es: 
+\begin{lstlisting}[style=consola]
+svn diff [-r revmenor:revmayor] fichero
+\end{lstlisting}
+
+\item Deshacer posibles cambios en un fichero o directorio:
+\begin{lstlisting}[style=consola]
+svn revert fichero
+\end{lstlisting}
+Esto restaura al fichero obtenido al del último \textit{svn update}.
+
+\item Resolver conflictos. Es muy conveniente el realizar un
+  \textit{svn update} antes de subir nuestras modificaciones por si
+  existiesen conflictos. 
+
+\item Por último, para poder enviar las modificaciones al servidor
+  usaremos el comando:
+  \begin{lstlisting}[style=consola]
+    svn commit -m log\_entre\_comillas
+  \end{lstlisting}
+  De esta forma quedarán almacenadas en el servidor las modificaciones
+  realizadas en nuestra copia de trabajo además de la pequeña
+  descripción que aportamos sobre éstas.
+\end{itemize}
+  
+
+\section{Ciclo de trabajo con \textbf{SCV} distribuido: Git}
+
+Como en todos los sistemas de control de versiones tenemos que
+instalar la aplicación. Para \textit{Git} esto se hace con el
+siguiente comando:
+\begin{lstlisting}[style=consola]
+  sudo apt-get install git-core
+\end{lstlisting}
+
+Para comenzar con \textit{Git} primero tenemos que introducir nuestros
+datos (nombre y correo electrónico) para que el sistema nos indique
+como autor en cada una de nuestras revisiones. Además podemos informar
+a \textit{Git} de cuál es nuestro editor favorito (por defecto usa
+Vim). Realizamos:
+\begin{lstlisting}[style=consola]
+  git config --global user.name ``Nombre Apellidos''
+  git config --global user.email micorreo@ejemplo.com
+  git config --global user.editor mieditor
+\end{lstlisting}
+
+Para comenzar con el ciclo de trabajo tenemos que crear nuestro
+repositorio vacío, o clonar uno existente. También tenemos que tener
+en cuenta si podrá acceder al repositorio varios usuarios. Crearemos
+un directorio vacío para, a partir de él crear un repositorio vacío
+y que se pueda compartir con todos los miembros del grupo al que
+pertenezcan los ficheros del repositorio.
+\begin{lstlisting}[style=consola]
+  mkdir directorioVacio
+  git init --shared=group
+\end{lstlisting}
+
+Podemos observar que se ha creado un directorio oculto
+\textit{.git}. Contiene:
+\begin{itemize}
+  \item \textbf{config} Fichero con la configuración local de Git para
+    este repositorio.
+  \item \textbf{description} Descripción del repositorio para
+    \textit{gitweb}
+  \item \textbf{HEAD} Referencia a la revisión actual con la que
+    trabajamos.
+  \item \textbf{hooks} Guiones bash o programas para responder ante
+    eventos.
+  \item \textbf{info/exclude} Fichero del estilo de
+    \textit{.gitignore} global para el repositorio y no controlado
+    por Git.
+  \item \textbf{object} Base de datos de objetos.
+  \item \textbf{refs} Referencias por nombre a las puntas de las
+    distintas ramas locales y remotas y a otras revisiones etiquetadas
+    por nombre. 
+\end{itemize}
+
+Para saber el estado de los ficheros en \textit{Git} tenemos el
+comando:
+\begin{lstlisting}[style=consola]
+  git status
+\end{lstlisting}
+
+Si en el directorio anterior creamos un fichero f cualquiera y
+ejecutamos el comando anterior obtenemos la siguiente salida:
+\begin{lstlisting}[style=consola]
+  # On branch master
+  #
+  # Initial commit
+  #
+  # Untracked files:
+  # (use "git add <file>..." to include in what will be committed)
+  #
+  # f
+  nothing added to commit but untracked files present (use "git add" to track)
+\end{lstlisting}
+
+Con esto sabemos que:
+\begin{itemize}
+  \item Nos encontramos en la rama principal del repositorio creado.
+  \item La siguiente revisión que creamos será la primera.
+  \item Existen algunos fichero cuyos cambios no están monitorizados
+    (añadidos al repositorio). En nuestro caso, nos está avisando que
+    faltaría añadir el fichero f.
+\end{itemize}
+
+Veamos pues cómo podemos añadir ficheros para prepararlos para envío.
+\begin{lstlisting}[style=consola]
+  git add f
+\end{lstlisting}
+
+También podemos borrar ficheros con la siguiente orden:
+\begin{lstlisting}[style=consola]
+  git rm fichero
+\end{lstlisting}
+
+Ahora enviaremos las modificaciones y crearemos la primera revisión
+con:
+\begin{lstlisting}[style=consola]
+  git commit -m comentario\_de\_la\_revision
+\end{lstlisting}
+
+Hay que tener en cuenta que con \textit{Git} trabajamos con tres
+estructuras de datos: el repositorio (el directorio .git), el índice o
+caché (.git/index) y la copia de trabajo (todo lo que está fuera de .git).
+
+Con lo cual podemos comparar qué estados tiene cada directorio y qué
+diferencias existen con la siguiente orden:
+\begin{lstlisting}[style=consola]
+  git diff
+\end{lstlisting}
+
+Obteniendo las diferencias entre el directorio de trabajo y la versión
+preparada para envío en el índice, además de destacar aquella línea
+que no preparemos para envío.
+
+\begin{lstlisting}[style=consola]
+  git diff --cached
+\end{lstlisting}
+
+Esta orde compara la versión del índice con la versión de la revisión
+actual (HEAD), y así nos señalará que versión tenemos preparada para
+enviar.
+
+Para poder deshacer cambios en \textit{Git} podemos restaurar un
+fichero del directorio de trabajo a la versión que se halle en el
+índice de la siguiente forma:
+\begin{lstlisting}[style=consola]
+  git checkout fichero
+\end{lstlisting}
+
+Las formas más comunes de deshacer cambios en un fichero son: \\
+\begin{tabular}{c c c}
+\hline
+Acción a deshacer & Afecta a & Orden \\
+\hline
+Añadido & & \\ 
+Modificado & índice & git reset -- f \\
+Borrado & & \\
+\hline
+Añadido & &  rm f \\
+Modificado & dir.trabajo & git checkout f \\
+Borrado & & git checkout f \\
+\hline
+Añadido & & git rm -f f \\
+Modificado & ambos & git checkout HEAD f \\
+Borrado & & git checkout HEAD f \\
+\hline
+\end{tabular}
+
+Si no hemos enviado aún nuestros cambios a ningún otro repositorio ni
+nadie nos ha tomado de nuestro repositorio podemos corregir errores
+fácilmente en la última revisión que hayamos hecho:
+
+\begin{lstlisting}[style=consola]
+  git commit --amend
+\end{lstlisting}
+
+Con esto la anterior revisión se ignorará y será efectivamente
+sustituida por otra que incorporará sus cambios y los que hayamos
+hecho ahora.
+
+Para poder etiquetar una revisión ejecutamos:
+\begin{lstlisting}[style=consola]
+  git tag etiqueta
+\end{lstlisting}
+
+También podemos etiquetar cualquier otra revisión creando objetos
+reales de tipo ``etiqueta'' con comentarios (-a) y firmada con nuestra
+clave pública GnuPG (-s) que tenga el mismo correo y nombre que le
+dimos a \textit{Git}:
+
+\begin{lstlisting}[style=consola]
+  git tag -a -s etiqueta revision
+\end{lstlisting}
+
+Finalmente podemos redistribuir los contenidos de cualquier revisión
+mediante la orden :
+
+\begin{lstlisting}[style=consola]
+  git archive etiqueta\_de\_la\_revision
+\end{lstlisting}
+
+

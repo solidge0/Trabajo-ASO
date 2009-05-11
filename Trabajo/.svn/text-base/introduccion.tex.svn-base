@@ -1,0 +1,297 @@
+\section[¿Qué es un S.C.VV.?]{¿Qué es un Sistema de Control 
+  de Versiones?}
+
+Un Sistema de Control de Versiones (en adelante \textbf{SCV}), es un 
+software que controla y organiza las distintas \textbf{revisiones} que 
+se realizen sobre uno o varios documentos.
+
+Pero, ¿qué es una revisión?. Se podría decir que una revisión es un cambio
+realizado sobre un documento, por ejemplo añadir un parrafo, borrar un 
+fragmento o algo similar. Veamos un ejemplo:\\
+
+Supongamos que cargamos en un SCV el siguiente código fuente:
+
+\begin{lstlisting}[style=C++]
+#include <iostream>
+
+int main(){
+  cout << ''Hola, mundo!'' << endl;
+}
+\end{lstlisting}
+
+Se añade al SCV como la revisión 1 del fichero. Una vez añadido, vemos que 
+no compila, ya que nos falta incluir el uso del espacio de nombres, así
+que lo modificamos:
+
+\begin{lstlisting}[style=C++]
+#include <iostream>
+
+using namespace std;
+
+int main(){
+  cout << ''Hola, mundo!'' << endl;
+}
+\end{lstlisting}
+
+Se vuelve a añadir al SCV, ahora como la revisión número 2. De esta forma, 
+se guarda el \textbf{historial} de las distintas modificaciones sobre un 
+fichero, por lo que en cualquier momento podemos restaurar la revisión que
+queramos de un fichero.\\
+
+Esto presenta varias ventajas, aunque la principal y la más llamativa es
+que nos permite mantener una copia de seguridad de todas las modificaciones
+realizadas sobre un fichero, lo cual nos facilita la tarea de deshacer algo
+que esté mal. Supongamos por ejemplo que modificamos un proyecto software, y
+modificamos un módulo para arreglar un bug.
+
+Ahora funciona para ese bug, pero nos hemos ``cargado'' otra funcionalidad 
+más importante, que no queremos perder. Simplemente volvemos a una revisión
+anterior, y no hay problemas.
+
+\section[¿Para qué sirve un S.C.VV.?]{¿Para qué sirve un Sistema de 
+  Control de Versiones?}
+
+De forma general, se utilizan SCV para desarrollo de proyectos Software, 
+sobre todo para realizar en grupos de desarrollo. Vamos a analizar un poco
+los motivos de porque esto es así.
+
+\subsection{Ejemplo de grupo de desarrollo sin Sistema de Control de Versiones}
+
+Supongamos un grupo de 5 desarrolladores, que están realizando un proyecto.
+Puede ser que el proyecto esté muy claro que partes tiene que hacer cada uno,
+pero esto no suele ser así.\\
+
+Estos desarrolladores van subiendo a un servidor tipo FTP las distintas 
+modificaciones que realizan sobre el código. Uno sube un fichero fuente 
+\texttt{claseA.h}, otro \texttt{entrada-salida.cpp}, etc...
+
+Sin embargo, llegará un momento en el que dos desarrolladores modifiquen
+el mismo fichero. Veamos un ejemplo claro, con el siguiente código:
+
+\begin{lstlisting}[style=C++]
+#include <iostream>
+
+using namespace std;
+
+int main(){
+  int *v = {1,2,3,5,9,10,3,2}; //esto no es correcto para el compilador, 
+                               //pero nos vale conceputalmente.
+  int a = 7 ,b = 3;
+
+  // -------- Swap entre a y b
+  int aux = a;
+  a = b;
+  b= aux;
+  //--------------------------
+  //------- Maximo de *v -----
+  int max = v[0];
+  for (int i = 0; i < 8 ; i++){
+    if (v[i] > max){
+      max = v[i];
+    }
+  }
+  //--------------------------
+
+  cout << ``a = `` << a << endl;
+  cout << ``b = `` << b << endl;
+  cout << ``max de v = `` << max << endl;
+}
+\end{lstlisting}
+
+Ahora, el desarrollador Pepe decide modular algo más el código, y añadir
+una función que realize el swap de dos variables enteras, quedando el siguiente
+código:
+
+\begin{lstlisting}[style=C++]
+#include <iostream>
+
+using namespace std;
+
+void swap(int &a, int &b);
+
+int main(){
+  int *v = {1,2,3,5,9,10,3,2}; //esto no es correcto para el compilador, 
+                               //pero nos vale conceputalmente.
+  int a = 7 ,b = 3;
+
+  // -------- Swap entre a y b
+  swap(a,b);
+  //--------------------------
+  //------- Maximo de *v -----
+  int max = v[0];
+  for (int i = 0; i < 8 ; i++){
+    if (v[i] > max){
+      max = v[i];
+    }
+  }
+  //--------------------------
+
+  cout << ``a = `` << a << endl;
+  cout << ``b = `` << b << endl;
+  cout << ``max de v = `` << max << endl;
+}
+
+void swap(int &a, int &b){
+  int aux = a;
+  a = b;
+  b= aux;
+}
+\end{lstlisting}
+
+Realiza el cambio y sube el fichero al servidor FTP, ``machacando'' el que
+ya estaba ahí. Ahora resulta que en el intervalo de tiempo en el que el
+desarrollador Pepe estaba realizando la función \texttt{swap()}, la
+desarrolladora \texttt{María}, decide realizar una función que localize el
+máximo de un vector y lo devuelva, ya que considera que se puede utilizar en
+muchos más sitios:
+
+\begin{lstlisting}[style=C++]
+#include <iostream>
+
+using namespace std;
+
+int maximo(int *v, int tam);
+
+int main(){
+  int *v = {1,2,3,5,9,10,3,2}; //esto no es correcto para el compilador, 
+                               //pero nos vale conceputalmente.
+  int a = 7 ,b = 3;
+
+  // -------- Swap entre a y b
+  int aux = a;
+  a = b;
+  b= aux;
+  //--------------------------
+  //------- Maximo de *v -----
+  int max = maximo(v,8);
+  //--------------------------
+
+  cout << ``a = `` << a << endl;
+  cout << ``b = `` << b << endl;
+  cout << ``max de v = `` << max << endl;
+}
+
+int maximo(int *v, int tam){
+  int max = v[0];
+  for (int i = 0 ; i < tam ; i++){
+    if (v[i] > max){
+      max = v[i];
+    }
+  }
+}
+\end{lstlisting}
+
+Ella, descargó la revisión anterior a la modificación de Pepe, por lo que sube
+el fichero, y ``machaca'' la versión anterior, que es la que habia hecho Pepe,
+eliminando su trabajo, el cual además era complementario al de María. Por tanto
+la próximo vez que Pepe compruebe el servidor, verá que lo que hizo ya no está.\\
+
+Aquí entran en juego los sistemas de control de versiones. Si el grupo de desarrollo
+usara un SCV, esto no pasaría, ya que estos sistemas vigilan sobre que lineas se han
+hecho estas modificaciones, de forma que ``verían'' que los dos cambios no son
+incompatibles, y en la nueva versión, \textit{mergerá} las dos modificaciones.
+
+Incluso sin esta función, el problema de conflicto, sería más facilmente resoluble,
+ya que al mantener versiones anteriores se pueden rescatar, para ver que cambios se
+han hecho y realizar esa unión de forma manual, aunque si es automatizable, mejor.\\
+
+Extrapolemos esto a cualquier desarrollo de software con un grupo relativamente grande, como
+por ejemplo los desarrolladores de cualquier proyecto de Software Libre medianamente grande, 
+en el cual puede haber decenas de personas distintas implicadas en el desarrollo. Si fuera
+un grupo como el descrito arriba, el desarrollo puede llegar a ser un auténtico caos. Por este
+motivo se hace indispensable el uso de alguna herramientas de SCV en desarrollos de software
+mayores que los unipersonales.
+
+Aunque no está restringido solo al software, ya que trabaja con cualquier tipo de ficheros de texto
+plano, por lo que también se puede usar para generar documentación de forma colaborativa usando
+\LaTeX{} por ejemplo \footnote{Los profesores del departamento de Estadística, lo usan para el
+libro de R}
+
+\subsection{Ejemplos en el Software Libre}
+
+Hemos visto antes que fundamentalmente el uso de SCV está destinado al desarrollo de Software,
+ayudando a la sincronización de los distintos miembros del grupo de desarrollo. Esto se cumple tanto
+en entornos privados (empresas) como en entornos públicos (proyectos libres). Veamos algunos ejemplos
+de proyectos libres que utilizan estas herramientas:
+
+\begin{description}
+\item[Kernel de Linux: ] Utiliza \textbf{Git} desde el año 2005. Previamente 
+  utilizaba \textbf{BitKeeper}
+\item[KDE: ] Utiliza \textbf{Subverion}. A fecha del 2 de Mayo de 2009, andan por la revisión 
+  962574, cerca de un millón, habiendo sido la primera en el año 1997. Actualmente trabajan en
+  el proyecto más de 200 personas. ¿Imaginamos como sería sincronizar todas estas personas sin
+  un SCV? Es totalmente imposible.
+\item[Firefox: ] Utilizan \textbf{CVS}.
+\item[Ubuntu: ] Utiliza \textbf{Bazaar}, un sistema distribuido.
+\end{description}
+
+Podríamos continuar la lista con muchísimos más. Por ejemplo, los sistemas de forjas 
+(\texttt{sourceforge.net}, \texttt{forja.rediris.es}, etc...) dan soporte para SCV, incluyendo
+herramientas para navegar en el arbol del repositorio.
+
+\section{Tipos de Sistemas de Control de Versiones}
+
+Fundamentalmente, podemos distinguir dos tipos distintos de SCV: \textbf{centralizados} y 
+\textbf{distribuidos}.
+
+\subsection{Sistemas centralizados}
+
+Presentan la característica fundamental de que funcionan como un entorno clásico \textit{Cliente-
+  Servidor}. Es decir, tendremos un servidor en el que se alojará el respositorio del proyecto,
+con toda la información de los cambios, ficheros binarios añadidos, etc...
+
+En estos sistemas, el cliente trabaja con una ``copia de trabajo'' del servidor, la cual es 
+realmente una copia de como estaba el servidor en una revisión determinada, normalmente es la más
+actualizada. El desarrollador hace cambios sobre esa copia de trabajo, y cuando considera que ha
+terminado con esa modificación la sube (\textbf{commit}) al servidor, el cual se encargará de 
+fundir esos cambios en el respositorio central, resolver conflictos si pudiera, ó informar al usuario
+de los errores que se hayan podido dar.
+
+Además, estos sistemas pueden a su vez dividirse en dos tipos más, según la forma que tengan de
+controlar los posibles conflictos sobre un mismo fichero desde más de un cliente:
+
+\subsubsection{Bloqueo del archivo}
+
+Aplicando el principio de exclusión mutua, estos sistemas lo que hace es muy simple: cuando alguien
+está modificando un archivo, bloquea el acceso de escritura a ese archivo para el resto de usuarios.
+
+Esto implica que habrá menos conflictos cuando se fundan distintas ramas, pero presentan una enorme
+cantidad de problemas extra:
+
+\begin{itemize}
+\item Alguien puede ``olvidarse'' de abrir el archivo para el resto.
+\item Puede ocasionar que alguien trabaje de forma local para evitar el cerrojo, 
+  y a la hora de fundir los cambios sea aun peor.
+\end{itemize}
+
+\subsubsection{Fusión de versiones}
+
+Es el usado en la mayoria de los SCV. Es lo que se explicó en el ejemplo anterior: el SCV controla
+que lineas del código se han cambiado en cada revisión, por lo que si dos desarrolladores cambian
+zonas distintas de un mismo fichero, el sistema podrá fundir ambos cambios en la versión
+del servidor.\\
+
+Sin embargo, estos sistemas pueden fallar por un simple indentado, una linea de más o de menos, 
+y en muchas ocasiones es el programador quien debe corregir esos conflictos a mano, que en muchos
+casos es bastante problemático.
+
+\subsection{Sistemas distribuidos}
+
+Si los sistemas centralizado utiliza un modelo clásico de entorno \textit{cliente-servidor}, se
+podría decir que un sistema distribuido es similar a un sistema \textit{Peer-to-Peer (P2P)}.
+
+En estos sistemas, en lugar de que cada cliente tiene una copia de trabajo del (único) servidor,
+la copia de trabajo de cada cliente es un respositorio en si mismo, una rama nueva del proyecto
+central. De esta forma, la sincronización de las distintas ramas se realiza intercambiando 
+``parches'' con otros clientes del proyecto. Esto es claramente un enfoque \textbf{muy} 
+diferente al de los sistemas centralizados, por diversos motivos:
+
+\begin{itemize}
+\item No hay una copia original del código del proyecto, solo existen las distintas copias 
+  de trabajo.
+\item Operaciones como los commits, mirar el historial o rehacer cambios, no necesitan de una
+  conexión con un servidor central, esta conexión solo es necesaria al ``compartir'' tu rama con
+  otro cliente del sistema.
+\item Cada copia de trabajo es una copia remota del código fuente y de la historia de cambios, 
+  dando una seguridad muy natural contra la pérdida de los datos.
+\end{itemize}

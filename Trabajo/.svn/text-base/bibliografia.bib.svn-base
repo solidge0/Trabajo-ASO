@@ -1,0 +1,31 @@
+% -*-bibliografia.bib-*-
+% Este fichero es parte de la plantilla LaTeX para
+% la realización de Proyectos Final de Carrera, protejido
+% bajo los términos de la licencia GFDL.
+% Para más información, la licencia completa viene incluida en el
+% fichero fdl-1.3.tex
+
+% Copyright (C) 2009 Pablo Recio Quijano 
+
+% Fichero para la bibliografía. Comentados algunos esquemas básicos.
+% Para referenciarlas, en el .tex, \cite{mitt04}, por ejemplo.
+% si quereis que salgan sin ser referenciados: \nocite{mitt04}
+% 
+
+@MISC{website:es.wikipedia.org,
+      AUTHOR = "Wikipedia",
+      title = "Control de Versiones",
+      HOWPUBLISHED = "\url{http://es.wikipedia.org/wiki/Control_de_versiones}"
+}
+
+@MISC{pdf:Subversion,
+      AUTHOR = "Roberto García Carvajal",
+      title = "Subversion",
+      HOWPUBLISHED = "\url{http://aulavirtual.uca.es/moodle/file.php/7587/svn/seminario_subversion.pdf}"
+}
+
+@MISC{pdf:Git,
+      AUTHOR = "Antonio García Domíngez",
+      title = "Apuntes-Operaciones Básicas",
+      HOWPUBLISHED = "\url{http://gitorious.org/projects/curso-git-osluca/repos/mainline}(sin servicio)"
+}

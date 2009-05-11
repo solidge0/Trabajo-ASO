@@ -1,0 +1,13 @@
+% Título:
+% ======
+\title{Sistemas de Control de Versiones}
+\subtitle{El punto de vista desde el servidor}
+\author[Rosa Durante, Leandro Pastrana, Pablo Recio, Noelia Sales]{
+Rosa Mª Durante Lerate\\
+Leandro Pastrana González\\
+Pablo Recio Quijano\\
+Noelia Sales Montes
+}
+\institute[UCA]{Universidad de Cádiz}
+\subject{Administración de Sistemas Operativos}
+\date[Mayo 2009]{Mayo 2009}

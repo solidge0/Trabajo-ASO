@@ -1,0 +1,71 @@
+\section{Sistemas de Control de Versiones Distribuidos DCVS}
+\subsection{Introducción}
+Los DVCS son herramientas de control de versiones que toman un enfoque punto a punto (peer to peer), al contrario de los centralizados que toman 
+un enfoque cliente-servidor. Con ellos solo se mantiene una copia local del repositorio, pero cada equipo se convierte en un \textbf{repositorio} del
+resto de usuarios, esto permite una fácil bifurcación en ramas y un manejo más flexible del repositorio.
+En este sistema existen pocos comandos que no trabajen directamente con el propiop disco duro, lo que lo covierte en una herramienta más rápida
+que un \textbf{Sistema de Control de Versiones Centralizado}. Cuando hayamos decidido que estamos listos, podemos enviarles los cambios a los repositorios de 
+los otros usuarios. Otra de las ventajas de trabajar de forma local es que puedes trabajar sin conexión a la red.
+En este sistema es importante la diferencia entre ramas de desarrollo (destinadas a pruebas, inestables, etc...) y la rama principal (trunk/master),
+en principio la actualización del repositorio se llevará a cabo de la rama principal y no del resto de ramas, aunque últimas si que pueden
+actualizarse en repositorios externos.
+
+\subsection{Diferencias entre DCVS y CVS}
+Las principales diferencias entre un sistema centralizado y uno distribuido son las siguientes, algunas ya señaladas en la introducción:
+\begin{enumerate}
+\item No existe una copia de referencia del código, solo copias de trabajo.
+\item Las operaciones suelen ser más rápidas al no tener que comunicarse con un servidor central.
+\item Cada copia de trabajo es un tipo de respaldo del código base.
+\item No hay que hacer update antes del commit, se trabaja sobre copia local.
+\item Se eliminan los problemas de latencia de la red.
+\item La creación y fusión de ramas es más fácil, porque cada desarrollador tiene su propia rama.
+\end{enumerate}
+
+Las principales desventajas que encontramos son las siguientes:
+\begin{enumerate}
+\item Todavía se necesita un sistema de backup. No hay que fiarse de que el backup reside en otro usuario, ya que este puede no admitirte más,
+o estar inactivo mientras que yo tengo cambios hechos, por lo que todavía será necesario un servidor central donde realizar los backups.
+\item Realmente no hay una \textit{última versión}. Si no hay un repositorio central no hay manera de saber cuál es la última versión estable del producto.
+\item Realmente no hay números de versión. Cada repositorio tiene sus propios números de revisión dependiendo de los cambios. En lugar de eso, 
+la gente pide la última versión del guid (número de versión) concreto, aunque cabe la posibilidad de etiquetar cada versión.
+\end{enumerate}
+
+Encontramos dos nuevos comandos principales que no trabajan localamente:
+\begin{itemize}
+\item push: envía cambios a otro repositorio (por supuesto, requiere permisos).
+\item pull: obtiene los cambios de otro/s repositorios.
+\end{itemize}
+
+
+\subsection{Cómo funcionan}
+Como se ha dicho cada desarrollador tiene su repositorio local si un usuario A realiza un cambio lo hace localemente y cuando crea oportuno puede
+compartirlo con el resto de usuarios. Pero existe una duda: ¿cuál es la versión principal?, la respuesta es sencilla: existe una rama principal
+en la cual todos los usuarios registran los cambios realizados obteniendo de esta forma la versión final. 
+Para más detalles explicaremos esto de forma gráfica como se muestra en la  Figura~\ref{fig:01}.
+
+%\begin{figure}
+%  \centering
+%    \includegraphics[width=0.5\textwidth]{./imagenes/graficodist.png}
+%  \caption{DCVS}
+%  \label{fig:01}
+%\end{figure}
+
+En el gráfico podemos ver la rama principal (trunk) y varios usuarios (A, B, y C). Cada usuario tiene su propio repositorio con ciertas ramas de
+desarrollo, existe una rama principal que lleva las versiones oficiales y sin fallos. Cada usuario guarda su copia local, pero además envía y 
+recibe desde y a otros repositorios ciertas ramas de desarrollo y por supuesto la principal que es la que contiene las versiones estables del 
+proyecto.
+
+\subsection{Diferentes DCVS}
+Entre los más populares encontramos:
+\begin{itemize}
+\item Git
+\item Mercurial
+\item Baazar
+\item Darcs
+\item Monotone
+\end{itemize}
+Procedemos a explicar Git y Mercurial al ser los más utilizados actualmente.
+
+\subsection{GIT}
+
+\subsection{Mercurial}

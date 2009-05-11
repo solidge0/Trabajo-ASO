@@ -1,0 +1,80 @@
+% Modo y características:
+% ==== = ===============
+\mode<presentation>
+{
+\usefonttheme{structuresmallcapsserif} 
+%\useoutertheme{shadow} 
+% -------------------------------------------------------------------
+% Elección del tema Beamer
+% -------------------------------------------------------------------
+% Más llamativos:
+% === ==========
+%\usetheme{Copenhagen}
+\usetheme{Darmstadt}
+%\usetheme{Frankfurt}
+%\usetheme{Ilmenau}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+% -------------------------------------------------------------------
+% Menos llamativos:
+% ===== ==========
+%\usetheme{Antibes}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Dresden}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme[height=7mm]{Singapore}
+% --------------------------------------------------------------------
+\useinnertheme{rounded}
+\setbeamercovered{transparent}
+}
+% --------------------------------------------------------------------
+% Esquema de color:
+% ======= == =====
+%\usecolortheme{albatross}
+%\usecolortheme{default}
+%\usecolortheme{beetle}
+%\usecolortheme{crane
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily} % SOI/SOII
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seahorse}
+%\usecolortheme{seagull}
+%\usecolortheme{sidebartab}
+%\usecolortheme{wolverine}
+%\usecolortheme[named=yellow]{structure}
+%\usecolortheme[named=purple]{structure}
+%\usecolortheme[named=blue]{structure}
+\usecolortheme[named=verdepres]{structure}
+% --------------------------------------------------------------------
+% Color del tema:
+% ===== === ====
+%\usecolortheme[named=DarkBlue]{structure}
+% --------------------------------------------------------------------
+% Modificación del fondo
+\usepackage{./estilos/fondo}
+% --------------------------------------------------------------------
+% Definición de comportamiento en cada nueva subsección:
+%  -> Título en función de sección y subsección
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Índice}
+   \transboxin
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+
+}
+% --------------------------------------------------------------------
+% Márgenes laterales (adecuación con el fondo)
+\setbeamersize{text margin left=2cm, text margin right=2.3cm}

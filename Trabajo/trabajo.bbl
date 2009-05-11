@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{pdf:Subversion}
+Roberto~García Carvajal.
+\newblock Subversion.
+\newblock
+  \url{http://aulavirtual.uca.es/moodle/file.php/7587/svn/seminario_subversion%
+.pdf}.
+
+\bibitem{pdf:Git}
+Antonio~García Domíngez.
+\newblock Apuntes-operaciones básicas.
+\newblock
+  \url{http://gitorious.org/projects/curso-git-osluca/repos/mainline}(sin
+  servicio).
+
+\bibitem{website:es.wikipedia.org}
+Wikipedia.
+\newblock Control de versiones.
+\newblock \url{http://es.wikipedia.org/wiki/Control_de_versiones}.
+
+\end{thebibliography}

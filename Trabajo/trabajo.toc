@@ -1,0 +1,61 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n a los SS.C.VV.}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}\IeC {\textquestiondown }Qu\IeC {\'e} es un S.C.VV.?}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}\IeC {\textquestiondown }Para qu\IeC {\'e} sirve un S.C.VV.?}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Ejemplo de grupo de desarrollo sin Sistema de Control de Versiones}{2}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Ejemplos en el Software Libre}{4}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}Tipos de Sistemas de Control de Versiones}{5}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Sistemas centralizados}{5}{subsection.1.3.1}
+\contentsline {subsubsection}{Bloqueo del archivo}{5}{section*.2}
+\contentsline {subsubsection}{Fusi\IeC {\'o}n de versiones}{5}{section*.3}
+\contentsline {subsection}{\numberline {1.3.2}Sistemas distribuidos}{5}{subsection.1.3.2}
+\contentsline {chapter}{\numberline {2}Funcionamiento para el cliente}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introducci\IeC {\'o}n al cliente en un \textbf {SCV}}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}T\IeC {\'e}rminos b\IeC {\'a}sicos}{7}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}Ciclo de trabajo con \textbf {SCV} centralizado: Subversion}{9}{section.2.2}
+\contentsline {section}{\numberline {2.3}Ciclo de trabajo con \textbf {SCV} distribuido: Git}{11}{section.2.3}
+\contentsline {chapter}{\numberline {3}El servidor en Sistemas Centralizados}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Introducci\IeC {\'o}n}{15}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Los paradigmas en Sistemas de Control de Versiones}{15}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Sistemas centralizados}{15}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}El enfoque Centralizado}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}CVS}{16}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Introducci\IeC {\'o}n}{16}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Caracter\IeC {\'\i }sticas}{16}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Estado actual}{17}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Limitaciones del protocolo CVS}{17}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}Requisitos m\IeC {\'\i }nimos}{17}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}Utilizaci\IeC {\'o}n y comandos}{17}{subsection.3.3.6}
+\contentsline {section}{\numberline {3.4}SVN}{19}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Ventajas}{19}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Carencias}{20}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Instalaci\IeC {\'o}n de SVN}{20}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Utilizaci\IeC {\'o}n y manejo}{20}{subsection.3.4.4}
+\contentsline {chapter}{\numberline {4}El servidor en Sistemas Distribuidos}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Sistemas de Control de Versiones Distribuidos DCVS}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Introducci\IeC {\'o}n}{21}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Diferencias entre DCVS y CVS}{21}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}C\IeC {\'o}mo funcionan}{22}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Diferentes DCVS}{22}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}GIT}{22}{subsection.4.1.5}
+\contentsline {subsubsection}{GIT Es Distribuido}{23}{section*.4}
+\contentsline {subsubsection}{Ramas Locales Sin Coste}{23}{section*.5}
+\contentsline {subsubsection}{GIT Es Local, R\IeC {\'a}pido y Peque\IeC {\~n}o}{23}{section*.6}
+\contentsline {subsubsection}{EL \IeC {\'A}rea de Montaje}{23}{section*.7}
+\contentsline {subsubsection}{Diferentes Flujos de Trabajo}{23}{section*.8}
+\contentsline {subsubsection}{Uso De GIT}{24}{section*.9}
+\contentsline {subsection}{\numberline {4.1.6}Mercurial}{24}{subsection.4.1.6}
+\contentsline {chapter}{Bibliografia y referencias}{25}{subsection.4.1.6}
+\contentsline {chapter}{GNU Free Documentation License}{27}{section*.12}
+\contentsline {section}{1. APPLICABILITY AND DEFINITIONS}{27}{section*.13}
+\contentsline {section}{2. VERBATIM COPYING}{28}{section*.14}
+\contentsline {section}{3. COPYING IN QUANTITY}{28}{section*.15}
+\contentsline {section}{4. MODIFICATIONS}{29}{section*.16}
+\contentsline {section}{5. COMBINING DOCUMENTS}{30}{section*.17}
+\contentsline {section}{6. COLLECTIONS OF DOCUMENTS}{31}{section*.18}
+\contentsline {section}{7. AGGREGATION WITH INDEPENDENT WORKS}{31}{section*.19}
+\contentsline {section}{8. TRANSLATION}{31}{section*.20}
+\contentsline {section}{9. TERMINATION}{31}{section*.21}
+\contentsline {section}{10. FUTURE REVISIONS OF THIS LICENSE}{32}{section*.22}
+\contentsline {section}{11. RELICENSING}{32}{section*.23}
+\contentsline {section}{ADDENDUM: How to use this License for your documents}{32}{section*.24}

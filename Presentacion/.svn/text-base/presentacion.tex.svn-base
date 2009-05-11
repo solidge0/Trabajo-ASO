@@ -1,0 +1,38 @@
+% ===================================================================
+%                   Presentación con Latex Beamer
+% ===================================================================
+\documentclass[9pt,xcolor=svgnames]{beamer}
+%\documentclass[handout,xcolor=svgnames]{beamer} %Version imprimible
+% -------------------------------------------------------------------
+% Paquetes personalizados
+\usepackage{./estilos/paquetes}
+\usepackage{./estilos/colores}
+\usepackage{./estilos/info}
+\usepackage{./estilos/modo}
+% -------------------------------------------------------------------
+
+% Comienza el documento
+\begin{document}
+% Tikz -> Imágenes
+\tikzstyle{every picture}+=[remember picture]
+% Entorno matemático
+\everymath{\displaystyle}
+% -------------------------------------------------------------------
+
+% Transparencia de Inicio -> Título
+\begin{frame}
+ \titlepage
+\end{frame}
+
+\normalsize
+
+% Transparencia de índice
+\begin{frame}
+ \frametitle{Índice} 
+ \transboxin
+ \tableofcontents
+\end{frame}
+
+
+
+ \end{document}

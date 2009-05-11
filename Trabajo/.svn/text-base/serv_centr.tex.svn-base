@@ -1,0 +1,455 @@
+% Sistemas de control de versiones centralizados
+
+
+ \section{Introducción}
+ 
+  \subsection{Los paradigmas en Sistemas de Control de Versiones}
+  
+  Desde hace tiempo, la tendencia de uso de los sistemas de control de
+  versiones, ha sido el uso centralizado mediante sistemas tan populares
+  como CVS o Subversion. Ahora, desde que muchos grandes proyectos
+  optaran por los sistemas de control de versiones distribuidos, cada
+  vez hay más gente que se va cambiando a ellos y, sobre todo, proyectos
+  grandes.
+
+  ¿Será que es mejor el enfoque distribuido al centralizado?
+  
+  \subsection{Sistemas centralizados}
+  
+  En un sistema de control de versiones centralizado todos nuestros
+  fuentes y sus versiones están almacenados en un único directorio
+  (llamado repositorio de fuentes) de un ordenador (un servidor). Todos
+  los desarrolladores que quieran trabajar con esos fuentes, deben
+  pedirle al sistema de control de versiones una copia local para
+  trabajar. En ella realizan todos sus cambios y cuando están listos y
+  funcionando, le dicen al sistema de control de versiones que guarde
+  los fuentes modificados como una nueva versión.
+  
+  Es decir, funcionan según el paradigma clásico cliente-servidor.
+  
+  Una vez subido el código, está disponible para otros desarrolladores,
+  que pueden actualizarse y pedir la nueva versión. De alguna forma,
+  para el intercambio de fuentes entre ellos, es necesario pasar por el
+  repositorio de fuentes del servidor. Es en el servidor donde están
+  guardadas todas las versiones y los desarrolladores sólo tienen en su
+  copia local aquellos fuentes que han solicitado del servidor.
+
+  Los sistemas de control de versiones gratuitos más conocidos son CVS y
+  Subversion. 
+  
+ \section{El enfoque Centralizado}
+ 
+ Cuando se desarrollaron los sistemas de control de versiones, muchos de
+ ellos se hicieron en esquema cliente-servidor, con lo que el desarrollo
+ de las herramientas está claramente diferenciado entre:
+ 
+ \begin{itemize}
+  \item el cliente, que es la aplicación que se conecta al servidor y
+	mantiene una copia local del repositorio, así como se encarga,
+	generalmente de la corrección de conflictos y la mayoría de
+	lógica del sistema.
+  \item el servidor, que es el sistema que toma los datos del cliente y
+	los almacena a espera de una o múltiples peticiones de esos
+	datos. Este sistema se encargaría del almacenamiento de las
+	versiones, control de concurrencia, bloqueos y otras
+	características parecidas a las de las bases de datos.
+ \end{itemize}
+ 
+ ¿Qué limitaciones y características posee? Haremos una breve lista:
+ 
+ \begin{itemize}
+  \item El sistema servidor es un repositorio, como los que mantienen
+	los clientes, pero perfectamente sincronizado y sin que dé lugar
+	a conflictos. Es la copia maestra de los datos.
+  \item Cuando un sistema web quiere hacer un listado, puede tomar los
+	datos de este servidor y siempre serán seguros, con lo que no
+	tendrá que resolver conflictos, ni tendrá que hacer mezclas.
+  \item Una copia local debe de poder mezclarse con el repositorio
+	central cuando queramos publicar un conjunto de cambios o cuando
+	queramos tomar la última versión publicada en concordancia con
+	nuestra copia local.
+  \item Es normal ver en muchos de estos sistemas ramificaciones,
+	versiones, etiquetas, o similares, a modo de tener varias copias
+	según nos interese. Estas ramificaciones están en el servidor y
+	en algunos casos puede llegar a ser muy costosa su
+	diferenciación.
+ \end{itemize}
+ 
+ 
+ 
+ \section{CVS}
+ 
+  \subsection{Introducción}
+  
+  El Concurrent Versions System (CVS), también conocido como Concurrent
+  Versioning System, es una aplicación informática que implementa un
+  sistema de control de versiones: mantiene el registro de todo el
+  trabajo y los cambios en los ficheros (código fuente principalmente)
+  que forman un proyecto (de programa) y permite que distintos
+  desarrolladores (potencialmente situados a gran distancia)
+  colaboren. CVS se ha hecho popular en el mundo del software libre. Sus
+  desarrolladores difunden el sistema bajo la licencia GPL.
+  
+  \subsection{Características}
+  
+  CVS utiliza una arquitectura cliente-servidor: un servidor guarda
+  la(s) versión(es) actual(es) del proyecto y su historial. Los clientes
+  se conectan al servidor para sacar una copia completa del
+  proyecto. Esto se hace para que eventualmente puedan trabajar con esa
+  copia y más tarde ingresar sus cambios con comandos GNU.
+  
+  Típicamente, cliente y servidor se conectan utilizando Internet, pero
+  con el sistema CVS el cliente y servidor pueden estar en la misma
+  máquina. El sistema CVS tiene la tarea de mantener el registro de la
+  historia de las versiones del programa de un proyecto solamente con
+  desarrolladores locales. Originalmente, el servidor utilizaba un
+  sistema operativo similar a Unix, aunque en la actualidad existen
+  versiones de CVS en otros sistemas operativos, incluido Windows. Los
+  clientes CVS pueden funcionar en cualquiera de los sistemas operativos
+  más difundidos.
+  
+  Varios clientes pueden sacar copias del proyecto al mismo
+  tiempo. Posteriormente, cuando actualizan sus modificaciones, el
+  servidor trata de acoplar las diferentes versiones. Si esto falla, por
+  ejemplo debido a que dos clientes tratan de cambiar la misma línea en
+  un archivo en particular, entonces el servidor deniega la segunda
+  actualización e informa al cliente sobre el conflicto, que el usuario
+  deberá resolver manualmente. Si la operación de ingreso tiene éxito,
+  entonces los números de versión de todos los archivos implicados se
+  incrementan automáticamente, y el servidor CVS almacena información
+  sobre la actualización, que incluye una descripción suministrada por
+  el usuario, la fecha y el nombre del autor y sus archivos log.
+  
+  Los clientes pueden también comparar diferentes versiones de archivos,
+  solicitar una historia completa de los cambios, o sacar una "foto"
+  histórica del proyecto tal como se encontraba en una fecha determinada
+  o en un número de revisión determinado. Muchos proyectos de código
+  abierto permiten el "acceso de lectura anónimo", significando que los
+  clientes pueden sacar y comparar versiones sin necesidad de teclear
+  una contraseña; solamente el ingreso de cambios requiere una
+  contraseña en estos casos.
+
+  Los clientes también pueden utilizar la orden de actualización con el
+  fin de tener sus copias al día con la última versión que se encuentra
+  en el servidor. Esto elimina la necesidad de repetir las descargas del
+  proyecto completo.
+  
+  CVS también puede mantener distintas "ramas" de un proyecto. Por
+  ejemplo, una versión difundida de un proyecto de programa puede formar
+  una rama y ser utilizada para corregir errores. Todo esto se puede
+  llevar a cabo mientras la versión que se encuentra actualmente en
+  desarrollo y posee cambios mayores con nuevas características se
+  encuentre en otra línea formando otra rama separada.
+  
+  \subsection{Estado actual}
+  
+  VS fue desarrollado por GNU, el sitio GNU distribuye el programa,
+  denominándolo "paquete GNU" con aplicaciones básicas a través de esta
+  página. En otros proyectos se otorga con licencia GPL.
+  
+  Actualmente existen muchas versiones de CVS implantadas en los
+  diferentes sistemas operativos.
+  
+  
+  \subsection{Limitaciones del protocolo CVS}
+  
+  Los archivos en el repositorio sobre la plataforma CVS no pueden ser
+  renombrados, estos deben ser agregados con otro nombre y luego
+  eliminados. El protocolo CVS no provee una manera de que los
+  directorios puedan ser eliminados o renombrados, cada archivo en cada
+  subdirectorio debe ser eliminado y re-agregado con el nuevo
+  nombre. Soporte limitado para archivos Unicode con nombres de archivo
+  no ASCII.
+
+  
+  \subsection{Requisitos mínimos}
+  
+  CVS requiere dos programas.
+  
+  Por un lado un servidor instalado en un ordenador. Este servidor es el
+  que guardará todas las versiones de todos nuestros ficheros. Es al que
+  le mandaremos nuestros ficheros cuando los tengamos listos y el que
+  nos devolverá dichos ficheros cuando se los pidamos.
+  
+  Por otro lado, en nuestro ordenador de trabajo necesitamos un cliente
+  de CVS. Este es un programa capaz de conectarse con el servidor y
+  pedirle o enviarle ficheros fuentes, según nosotros lo vayamos
+  necesitando. Para windows hay un programa cvs.exe que se ejecuta desde
+  la línea de comandos de ms-dos. Será ese el que usemos, ya que nos
+  permitirá aprender los comandos típicos de CVS. 
+  
+
+  \subsection{Utilización y comandos}
+  
+  Suponemos instalado un servidor de CVS en algún ordenador. Vamos a ver
+  las cosas que podemos hacer en el orden en que habitualmente se hacen.
+  
+  %cvs import ---> Creación de un proyecto
+  
+  Alguien, en su ordenador crea toda la estructura de directorios para
+  un proyecto. Pone directorios para los fuentes, ficheros de
+  configuración, scripts de compilado, imágenes, algo de código fuente,
+  etc, etc.
+  
+  Para guardar esa primera versión del proyecto primero debemos declarar
+  la variable de entorno CVSROOT de la siguiente forma.
+  
+  %C:\> set CVSROOT=:pserver:usuario@servidor:directorio
+  
+  donde:
+  
+  \begin{itemize}
+   \item usuario es el nombre del usuario que va crear el proyecto. El
+	 nombre de usuario debe ser conocido por el servidor de CVS.
+   \item servidor es el nombre del ordenador en el que corre el servidor
+	 de CVS.
+   \item directorio es el directorio en el ordenador del servidor donde
+	 se almacenan nuestros fuentes. 
+  \end{itemize}
+  
+  Por supuesto, estas tres cosas deben ser conocidas y estar
+  configuradas en el servidor de CVS.
+  
+  Una vez definida la variable, hay que entrar en sesión
+  
+  %C:\> cvs login
+  %password:
+  
+  El comando cvs login sólo es necesario ejecutarlo una vez en la
+  vida. La sesión permanecerá abierta incluso aunque apaguemos el
+  ordenador. La única forma de salir de la sesión es ejecutando cvs
+  logout
+  
+  Ejecutando cvs login nos pedirá la password para el usuario. Debe ser
+  por supuesto la que tengamos para el servidor de CVS.
+  
+  Ahora nos vamos al directorio donde esté nuestro proyecto y ejecutamos
+  el comando
+  
+  %C:\> cvs import PROYECTO etiqueta1 etiqueta2
+  
+  donde:
+  
+  \begin{itemize}
+   \item PROYECTO es el nombre que queramos dar a nuestro proyecto. No
+	 puede haber en CVS dos proyectos con el mismo nombre.
+   \item etiqueta1 es una etiqueta cualquiera. Habitualmente se suele
+	 poner el nombre de la empresa.
+   \item etiqueta2 es otra etiqueta cualquiera. Suele ponerse algo
+	 relativo a la versión. 
+  \end{itemize}
+  
+  
+  Este comando llevará a CVS todos los directorios y ficheros en el
+  directorio actual y subdirectorios recursivamente.
+  
+  %cvs checkout ---> Extraer un proyecto de CVS
+  
+  Si ahora otro programador quiere tener en su ordenador el proyecto,
+  debe realizar los siguientes pasos:
+  
+  Declarar la variable CVSROOT como se indicó anteriormente.
+  
+  Entrar en sesión con cvs login
+  
+  Situarse en el directorio donde quiera que se cree el proyecto y ejecutar
+  
+  %C:\> cvs checkout PROYECTO
+  
+  Donde PROYECTO es el nombre que se la haya dado al proyecto en CVS.
+  
+  Esto creará un directorio PROYECTO y debajo de el sacará
+  recursivamente todos los subdirectorios y ficheros del proyecto.
+  
+  En cada directorio del proyecto se crea adicionalmente un
+  subdirectorio CVS para uso de CVS. Dentro de ese directorio se guarda
+  información, como el valor de la variable CVSROOT. Por ello, si
+  estamos por los directorios de un proyecto extraido de CVS, el valor
+  de la variable CVSROOT se ignora. Sólo es necesario definir CVSROOT a
+  la hora de crear un proyecto nuevo en CVS o extraerlo por primera vez.
+  
+  Es posible que los subdirectorios vacios (sin ficheros dentro), el
+  comando no los saque. Por ello suele ser habitual al crear el
+  proyecto, poner en todos los directorios un fichero que no sirve para
+  nada de nombre .dummy. Esto asegura que ese directorio salga de CVS.
+  
+  %cvs add ---> Añadir directorios a un proyecto
+  
+  Para añadir más directorios a un proyecto CVS, primero los creamos en
+  nuestro ordenador, en el directorio adecuado. Luego ejecutamos el
+  comando cvs add
+  
+  %C:\> mkdir UnDirectorio
+  %C:\> cvs add UnDirectorio
+  
+  %cvs add + cvs commit ---> Añadir ficheros a un proyecto
+  
+  Para añadir un fichero de texto nuevo a CVS, primero creamos el
+  fichero en nuestro ordenador, en el directorio del proyecto adecuado,
+  luego ejecutamos dos comandos, cvs add y cvs commit
+  
+  %C:\> notepad fichero.java
+  %C:\> cvs add fichero.java
+  %C:\> cvs commit -m"Un Comentario" fichero.java
+  
+  Esto llevará el fichero al repositorio de CVS con el comentario que
+  pongamos.
+  
+  Si no ponemos la opción -m con el comentario, se abrirá el editor por
+  defecto (notepad o vi) para que introduzcamos el comentario. Cuando
+  salvemos y salgamos del editor, se ejecutará el comando.
+  
+  CVS es bastante listo y tiene en cuenta si el fichero lo hemos metido
+  en windows o linux y si lo intentamos sacar desde windows o linux. Al
+  hacer estas operaciones, cambia los retornos de carro adecuados para
+  el sistema operativo. Es decir, cambia los /n por /r/n o al revés,
+  según sea necesario.
+  
+  Si el fichero es binario, no nos gustaría que hiciera esta
+  operación. Para ello hay que meterlos en cvs indicando que son
+  binarios. De todas formas, CVS es listo y conoce muchas de las
+  extensiones habituales, por lo que lo suele hacer automáticamente.
+
+
+  %C:\> cvs add -kb imagen.jpg
+  %C:\> cvs commit -m"Un comentario" imagen.jpg
+  
+  %cvs commit ---> Modificar un fichero de un proyecto
+  
+  Para modificar un fichero de un proyecto, simplemente lo modificamos
+  con nuestro editor favorito, lo salvamos y ejecutamos el comando cvs
+  commit
+  
+  %C:\> gvim fichero.java
+  %C:\> cvs commit -m"Un comentario" fichero.java
+  
+  %cvs update ---> Obtener la última versión de CVS
+  
+  Si un compañero ha modificado ficheros y los ha llevado al servidor
+  con el comando cvs commit, podemos traerlos a nuestro ordenador
+  ejecutando cvs update
+
+  
+  %C:\> cvs update -Ad
+  
+  El comando cvs update trae la versión más moderna de los ficheros del
+  directorio actual a todos los ficheros y subdirectorios por debajo, de
+  forma recursiva.
+  
+  La opción -A hace que se extraiga la versión más moderna,
+  independientemente de que en otro momento hayamos indicado que
+  queremos tener una versión concreta.
+  
+  La opción -d hace que se extraigan todos los subdirectorios nuevos que
+  se hayan metido en CVS y que no tengamos en nuesro ordenador.
+  
+  %cvs log + cvs diff + cvs status ---> Obtener información de CVS
+  
+  Si queremos ver la historia de un fichero, basta ejecutar el comando
+  cvs log
+  
+  %C:\> cvs log fichero.java
+  
+  Esto nos dará todas las versiones que hay y el comentario en cada una
+  de ellas, así como la fecha en que se hizo, quién lo hizo, etc.
+  
+  Para obtener una versión anterior, hacemos cvs update
+  
+  %C:\> cvs update -r1.1 fichero.java
+
+  Donde 1.1 es la versión que deseemos y que exista en CVS.
+  
+  Este comando es "peligroso". CVS recuerda que versión queremos y si
+  hacemos otros cvs update no nos sacará la versión más moderna. Para
+  conseguir la versión más moderna está la opción -A que comentamos
+  antes.
+
+  Podemos obtener las diferencias de un fichero entre nuestra versión y
+  otra que esté en CVS.
+  
+  %C:\> cvs diff -r1.1 fichero.java
+
+  Este comando nos da un listado de diferencias entre el fichero.java
+  que tenemos en nuestro directorio y la version 1.1 de CVS.
+  
+  Finalmente, el comando cvs status nos dice cómo estamos respecto a cvs
+  
+  %C:\> cvs status
+  
+  puede devolver:
+  
+  \begin{itemize}
+   \item Locally modified: Hemos modificado el fichero y no lo hemos
+	 metido en CVS. Cuando terminemos, debemos hacer cvs commit
+   \item up-to-date: Nuestra versión y la de CVS son la misma.
+   \item needs update: Nuestra versión es más antigua que la de
+	 cvs. Deberíamos hacer un cvs update
+   \item needs patch: Nuestra versión es más antigua que la de CVS y
+	 además la hemos modifiado. Tendríamos que ver los cambios entre
+	 la más moderna que hay en CVS y los que hemos hecho nosotros
+	 sobre una más antigua para ver si son compatibles y resolver
+	 los posibles conflictos. 
+  \end{itemize}
+  
+  
+  
+  
+ \section{SVN}
+ 
+ SVN es conocido así por ser el nombre del cliente, el software en sí es
+ llamado subversion.
+ 
+ Este es un sistema de control de versiones centralizado, fue diseñado como
+ reemplazo de CVS,
+ 
+  \subsection{Ventajas}
+
+  \begin{itemize}
+   \item Se sigue la historia de los archivos y directorios a través de
+	 copias y renombrados.
+   \item Las modificaciones (incluyendo cambios a varios archivos) son
+	 atómicas.
+   \item La creación de ramas y etiquetas es una operación más
+	 eficiente; Tiene costo de complejidad constante (O(1)) y no
+	 lineal (O(n)) como en CVS.
+   \item Se envían sólo las diferencias en ambas direcciones (en CVS
+	 siempre se envían al servidor archivos completos).
+   \item Puede ser servido mediante Apache, sobre WebDAV/DeltaV. Esto
+	 permite que clientes WebDAV utilicen Subversion en forma
+	 transparente.
+   \item Maneja eficientemente archivos binarios (a diferencia de CVS
+	 que los trata internamente como si fueran de texto).
+   \item Permite selectivamente el bloqueo de archivos. Se usa en
+	 archivos binarios que, al no poder fusionarse fácilmente,
+	 conviene que no sean editados por más de una persona a la vez.
+   \item Cuando se usa integrado a Apache permite utilizar todas las
+	 opciones que este servidor provee a la hora de autentificar
+	 archivos (SQL, LDAP, PAM, etc.).
+  \end{itemize}
+
+
+  \subsection{Carencias}
+
+  \begin{itemize}
+   \item El manejo de cambio de nombres de archivos no es completo. Lo
+	 maneja como la suma de una operación de copia y una de borrado.
+   \item No resuelve el problema de aplicar repetidamente parches entre
+	 ramas, no facilita el llevar la cuenta de qué cambios se han
+	 trasladado. Esto se resuelve siendo cuidadoso con los mensajes
+	 de commit. Esta carencia será corregida en la próxima versión
+	 (1.5).
+  \end{itemize}
+
+  \subsection{Instalación de SVN}
+  
+  \begin{listing}
+   apt-get install subversion
+  \end{listing}
+  
+  \subsection{Utilización y manejo}
+  
+  \begin{listing}
+   svnadmin create repositorio
+  \end{listing}
+  
+
